@@ -8,13 +8,13 @@ export class Post {
     id!: number;
 
     // property = decorator for creating a column
-    @Property()
+    @Property({ type: 'date' })
     createdAt = new Date();
 
     // hook that creates a date every time post updated
-    @Property({ onUpdate: () => new Date() })
+    @Property({ type: 'date', onUpdate: () => new Date() })
     updatedAt = new Date();
 
-    @Property()
+    @Property({ type: 'text' })
     title!: string;
 }
