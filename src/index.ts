@@ -8,19 +8,20 @@ import { ApolloServer } from 'apollo-server-express';
 import { buildSchema } from "type-graphql";
 import { HelloResolver } from "./resolvers/hello";
 import { PostResolver } from "./resolvers/post";
+import { UserResolver } from "./resolvers/user";
 
 const main = async (): Promise<void> => {
     try {
         const orm = await MikroORM.init(mikroOrmConfig);
 
-        // run migrations
+        // run/update migrations
         orm.getMigrator().up();
 
         const app = express()
 
         const apolloServer = new ApolloServer({
             schema: await buildSchema({
-                resolvers: [HelloResolver, PostResolver],
+                resolvers: [HelloResolver, PostResolver, UserResolver],
                 validate: false
             }),
             // special fn that returns object accessible to all resolvers
