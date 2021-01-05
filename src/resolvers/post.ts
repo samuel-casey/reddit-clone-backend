@@ -35,6 +35,7 @@ export class PostResolver {
         return newPost
     }
 
+    // UPDATE SINGLE POST TITLE BY ID
     @Mutation(() => Post, { nullable: true })
     async updatePost(
         @Arg("id") id: number,
@@ -50,5 +51,21 @@ export class PostResolver {
         }
         return postToUpdate
     }
+
+    // DELETE SINGLE POST BY ID
+    @Mutation(() => Boolean)
+    async deletePost(
+        @Arg("id") id: number,
+        @Ctx() { em }: MyContext
+    ): Promise<boolean> {
+        try {
+            await em.nativeDelete(Post, { id })
+            return true
+        } catch (error) {
+            return false
+
+        }
+    }
+    )
 
 }
